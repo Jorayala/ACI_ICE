@@ -1,0 +1,4 @@
+plugin: zjpeterson.aci.aci_inventory
+host: 10.225.242.241
+validate_certs: no
+timeout: 60

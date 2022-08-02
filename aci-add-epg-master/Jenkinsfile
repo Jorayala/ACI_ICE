@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+
+    environment {
+        WEBEX_ROOM = '' // Room: CICD Notifications
+        WEBEX_CREDS = ''
+    }
+
+    stages {
+        stage("Clone Git Repo"){
+            steps {
+                echo 'Cloning Git Repos'
+                git branch: 'master', credentialsId:'93f1c9db-b770-40b9-a984-662daeb8dae8', url: 'https://wwwin-github.cisco.com/bac-demo/aci-add-epg.git'
+            }
+        }
+        stage("test"){
+            agent {
+                docker {
+                    args '-u root:sudo'
+                    image 'containers.cisco.com/marcegar/static_analysis_mg'
+                    reuseNode true
+                }
+            }
+            steps {
+                sh """
+                    ansible-lint ${WORKSPACE}/aci-deploy.yml
+                   """
+            }
+        }
+        stage("deploy"){
+            steps {
+                echo 'Deploying the application....'
+                ansibleTower credential: 'ACI DEMO', inventory: 'ACI', jobTemplate: 'BAC', jobType: 'check', throwExceptionWhenFail: false, towerCredentialsId: '71d40a98-d94d-4bd2-8a07-21866bb5e3d4', towerLogLevel: 'full', towerServer: 'AWX_demo'
+            
+            }
+        }
+    }
+}
+
