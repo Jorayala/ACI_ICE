@@ -10,23 +10,10 @@ pipeline {
         stage("Clone Git Repo"){
             steps {
                 echo 'Cloning Git Repos'
-                git branch: 'master', credentialsId:'93f1c9db-b770-40b9-a984-662daeb8dae8', url: 'https://wwwin-github.cisco.com/bac-demo/aci-add-epg.git'
+    //            git branch: 'master', credentialsId:'93f1c9db-b770-40b9-a984-662daeb8dae8', url: 'https://wwwin-github.cisco.com/bac-demo/aci-add-epg.git'
             }
         }
-        stage("test"){
-            agent {
-                docker {
-                    args '-u root:sudo'
-                    image 'containers.cisco.com/marcegar/static_analysis_mg'
-                    reuseNode true
-                }
-            }
-            steps {
-                sh """
-                    ansible-lint ${WORKSPACE}/aci-deploy.yml
-                   """
-            }
-        }
+       
         stage("deploy"){
             steps {
                 echo 'Deploying the application....'
