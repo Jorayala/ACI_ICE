@@ -10,14 +10,14 @@ pipeline {
         stage("Clone Git Repo"){
             steps {
                 echo 'Cloning Git Repos'
-    //            git branch: 'master', credentialsId:'93f1c9db-b770-40b9-a984-662daeb8dae8', url: 'https://wwwin-github.cisco.com/bac-demo/aci-add-epg.git'
+            //    git branch: 'master', credentialsId:'93f1c9db-b770-40b9-a984-662daeb8dae8', url: 'https://wwwin-github.cisco.com/bac-demo/aci-add-epg.git'
             }
         }
        
         stage("deploy"){
             steps {
                 echo 'Deploying the application....'
-                ansibleTower credential: 'ACI DEMO', inventory: 'ACI', jobTemplate: 'BAC', jobType: 'check', throwExceptionWhenFail: false, towerCredentialsId: '71d40a98-d94d-4bd2-8a07-21866bb5e3d4', towerLogLevel: 'full', towerServer: 'AWX_demo'
+                ansibleTower inventory: 'ACI', jobTemplate: 'ACI2', jobType: 'run', throwExceptionWhenFail: false, towerCredentialsId: '794a12d2-99dc-4610-ab53-ca428df76868', towerLogLevel: 'false', towerServer: 'AWX_demo'
             
             }
         }
