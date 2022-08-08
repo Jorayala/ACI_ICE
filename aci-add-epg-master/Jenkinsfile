@@ -1,18 +1,18 @@
 pipeline {
     agent any
 
-    environment {
-        WEBEX_ROOM = '' // Room: CICD Notifications
-        WEBEX_CREDS = ''
-    }
+    //environment {
+       // WEBEX_ROOM = '' // Room: CICD Notifications
+        //WEBEX_CREDS = ''
+    //}
 
     stages {
-        stage("Clone Git Repo"){
-            steps {
-                echo 'Cloning Git Repos'
+        //stage("Clone Git Repo"){
+            //steps {
+                //echo 'Cloning Git Repos'
             //    git branch: 'master', credentialsId:'93f1c9db-b770-40b9-a984-662daeb8dae8', url: 'https://wwwin-github.cisco.com/bac-demo/aci-add-epg.git'
-            }
-        }
+            //}
+        //}
        
         stage("deploy"){
             steps {
