@@ -35,7 +35,7 @@
         username: "{{ aci_username }}"
         password: "{{ aci_password }}"
         tenant: "{{ aci_tenant }}"
-        description: BACDEMO
+        description: ICEDEMO
         state: present
         validate_certs: false
 
