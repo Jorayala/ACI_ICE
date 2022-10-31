@@ -4,7 +4,7 @@
   gather_facts: false
   vars:
     aci_tenant: CISCOCONNECT2022
-    aci_ap_name: bac-apps
+    aci_ap_name: gtest-apps
     aci_bd: gtest-bridge
     aci_vrf: gtest-vrf
     aci_epgs:
