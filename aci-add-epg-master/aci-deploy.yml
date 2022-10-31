@@ -3,7 +3,7 @@
   hosts: localhost
   gather_facts: false
   vars:
-    aci_tenant: APICDEMOBAC
+    aci_tenant: CISCOCONNECT2022
     aci_ap_name: bac-apps
     aci_bd: gtest-bridge
     aci_vrf: gtest-vrf
