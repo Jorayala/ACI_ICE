@@ -17,7 +17,7 @@ pipeline {
         stage("deploy"){
             steps {
                 echo 'Deploying the application....'
-                ansibleTower inventory: 'ACI', jobTemplate: 'ACI2', jobType: 'run', throwExceptionWhenFail: false, towerCredentialsId: '794a12d2-99dc-4610-ab53-ca428df76868', towerLogLevel: 'false', towerServer: 'AWX_demo'
+                ansibleTower inventory: 'ACI', jobTemplate: 'ACI2', jobType: 'run', throwExceptionWhenFail: false, towerCredentialsId: 'a284a628-688e-4055-ad06-74b5f059f2c9', towerLogLevel: 'false', towerServer: 'AWX_demo'
             
             }
         }
