@@ -1,10 +1,10 @@
 pipeline {
     agent any
 
-    //environment {
-       // WEBEX_ROOM = '' // Room: CICD Notifications
-        //WEBEX_CREDS = ''
-    //}
+    environment {
+         WEBEXAUTH = credentials('webex-auth-token')
+         WEBEXROOM = credentials('webex-roomid')
+    }
 
     stages {
         //stage("Clone Git Repo"){
@@ -20,6 +20,37 @@ pipeline {
                 ansibleTower inventory: 'ACI', jobTemplate: 'ACI2', jobType: 'run', throwExceptionWhenFail: false, towerCredentialsId: 'a284a628-688e-4055-ad06-74b5f059f2c9', towerLogLevel: 'false', towerServer: 'AWX_demo'
             
             }
+        }
+        post { 
+        success { 
+          
+            wrap([$class: 'BuildUser']) {
+            sh """
+                    curl --location --request POST 'https://webexapis.com/v1/messages' \
+--header "Authorization: Bearer ${WEBEXAUTH}" \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "roomId": "${WEBEXROOM}",
+  
+  "markdown": "Started at: ${BUILD_TIMESTAMP}\\nAuthor:${env.BUILD_USER}(${env.BUILD_USER_EMAIL})\\nJob URL: ${Job_URL}\\nBuild ID: ${BUILD_NUMBER}\\nBuild Logs: ${BUILD_URL}consoleText\\nResult: ${currentBuild.currentResult}" 
+}'
+         """
+                
+            }
+        }
+        failure { 
+            
+            sh """
+                    curl --location --request POST 'https://webexapis.com/v1/messages' \
+--header "Authorization: Bearer ${WEBEXAUTH}" \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "roomId": "${WEBEXROOM}",
+  
+  "markdown": "Started at: ${BUILD_TIMESTAMP}\\nAuthor:${env.BUILD_USER}(${env.BUILD_USER_EMAIL})\\nJob URL: ${Job_URL}\\nBuild ID: ${BUILD_NUMBER}\\nBuild Logs: ${BUILD_URL}consoleText\\nResult: ${currentBuild.currentResult}" 
+}'
+         """
+            
         }
     }
 }
