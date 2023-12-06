@@ -22,38 +22,7 @@ pipeline {
             }
         }
     }
-        post { 
-        success { 
-          
-            wrap([$class: 'BuildUser']) {
-            sh """
-                    curl --location --request POST 'https://webexapis.com/v1/messages' \
---header "Authorization: Bearer ${WEBEXAUTH}" \
---header 'Content-Type: application/json' \
---data-raw '{
-  "roomId": "${WEBEXROOM}",
-  
-  "markdown": "Started at: ${BUILD_TIMESTAMP}\\nAuthor:${env.BUILD_USER}(${env.BUILD_USER_EMAIL})\\nJob URL: ${Job_URL}\\nBuild ID: ${BUILD_NUMBER}\\nBuild Logs: ${BUILD_URL}consoleText\\nResult: ${currentBuild.currentResult}" 
-}'
-         """
-                
-            }
-        }
-        failure { 
-            
-            sh """
-                    curl --location --request POST 'https://webexapis.com/v1/messages' \
---header "Authorization: Bearer ${WEBEXAUTH}" \
---header 'Content-Type: application/json' \
---data-raw '{
-  "roomId": "${WEBEXROOM}",
-  
-  "markdown": "Started at: ${BUILD_TIMESTAMP}\\nAuthor:${env.BUILD_USER}(${env.BUILD_USER_EMAIL})\\nJob URL: ${Job_URL}\\nBuild ID: ${BUILD_NUMBER}\\nBuild Logs: ${BUILD_URL}consoleText\\nResult: ${currentBuild.currentResult}" 
-}'
-         """
-            
-        }
-    }
+    
 }
 
 
